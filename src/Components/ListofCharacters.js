@@ -25,13 +25,11 @@ class ListofCharacters extends Component {
         axios.get('https://anapioficeandfire.com/api/books/' + id).then((response)=>{
             let charactersList = response.data.characters;
             this.setState({count: charactersList.length});
-            charactersList.map((character) =>{
-                axios.get(character).then((response)=>{
-                    if(response.data.name==='')
-                    this.setState({characters : [...this.state.characters , response.data.aliases[0]]});
-                    else
-                    this.setState({characters : [...this.state.characters , response.data.name]});
-                })
+            let characters = charactersList.map((character) =>{
+                return axios.get(character)
+            })
+            Promise.all(characters).then((values)=>{
+                this.setState({characters: values.map((value)=>value.data.name? value.data.name: value.date.aliases[0])})
             })
 
         }).catch((e)=>{
