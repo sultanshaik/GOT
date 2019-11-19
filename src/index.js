@@ -16,7 +16,7 @@ class App extends Component{
   }
 
   render(){
-    return <div><PickBook changeOption = {this.changeOption} /><ListofCharacters id  = {this.state.id} /></div>;
+    return (<div><PickBook changeOption ={this.changeOption} /><ListofCharacters bookId = {this.state.id}/></div>);
   }
 }
 
